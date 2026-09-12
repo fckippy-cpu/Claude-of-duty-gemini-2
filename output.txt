@@ -781,11 +781,9 @@ export function MapMeshes(): JSX.Element {
       <Suspense fallback={null}>
         <YachtGLB />
       </Suspense>
-      {/* static geometry, merged per material. Rendered invisible: still
-          drives OCC, COLL, NAV, rayWorld(), losBlocked(), and the minimap
-          baker. The visible yacht comes from YachtGLB above. */}
+      {/* static geometry, merged per material */}
       {merged.map(({ mat, geo }, i) => (
-        <mesh key={i} geometry={geo} material={getMat(mat)} visible={false} />
+        <mesh key={i} geometry={geo} material={getMat(mat)} castShadow={quality === 'high'} receiveShadow={quality === 'high'} />
       ))}
       {/* pool water with caustics, bobbing, and edge brightening */}
       <mesh ref={waterRef} rotation={[-Math.PI / 2, 0, 0]} position={[3, -0.35, 0]}>
@@ -825,3 +823,4 @@ export function MapMeshes(): JSX.Element {
     </group>
   );
 }
+
